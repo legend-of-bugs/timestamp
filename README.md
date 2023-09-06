@@ -2,7 +2,7 @@
 Creating password reset tokens based on username and time stamp with different patterns
 
 # installation
-- git clone
+- git clone https://github.com/legend-of-bugs/timestamp.git
 - cd timestamp
 - pip install -r requirements.txt
 
