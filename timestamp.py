@@ -52,10 +52,11 @@ output = open(f"export/{file_name}.txt","a")
 count = 0
 for timest in unique_timestamps:
     for pat in pattern:
-        count += 1
-        rep = str(pat).replace("$USERNAME",str(arg.u)).replace("$TIMESTAMP",str(timest))
-        md5 = string_to_md5(rep)
-        output.write(md5+"\n")
+        for username in str(arg.u).split(","):
+            count += 1
+            rep = str(pat).replace("$USERNAME",str(username)).replace("$TIMESTAMP",str(timest))
+            md5 = string_to_md5(rep)
+            output.write(md5+"\n")
 output.close()
 print(f"{Fore.GREEN}\n{str(count)}{Fore.WHITE} Hash was created successfully :)")
 print(f"Check {Fore.GREEN}export/{file_name}.txt")
