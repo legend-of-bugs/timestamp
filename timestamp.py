@@ -3,6 +3,7 @@ import hashlib
 import argparse
 import json
 from colorama import Fore,init
+import itertools
 
 init()
 parser = argparse.ArgumentParser()
@@ -30,6 +31,16 @@ def banner():
     print(f"{Fore.WHITE}For {Fore.RED}{arg.s}{Fore.WHITE} Seconds")
 banner()
 
+def create_states(string):
+    words = str(string).split(",")
+    all = []
+    for n in range(1, len(words)+1):
+        for p in itertools.permutations(words, n):
+            states = " ".join(p)
+            all.append(states)
+    return all
+
+
 def string_to_md5(my_string):
     m = hashlib.md5()
     m.update(my_string.encode('utf-8'))
@@ -46,15 +57,16 @@ while current_time <= new_time:
     timestamps.append(str(current_time).split(".")[0])
 
 unique_timestamps = list(set(timestamps))
-pattern = json.loads(open("pattern.json","r").read())
+separator = json.loads(open("separators.json","r").read())
 file_name = f"{arg.u}-{str(time.time()).split('.')[0]}"
 output = open(f"export/{file_name}.txt","a")
 count = 0
 for timest in unique_timestamps:
-    for pat in pattern:
-        for username in str(arg.u).split(","):
+    states = create_states(f"{timest},{','.join(str(arg.u).split(','))}")
+    for state in states:
+        for sep in separator:
             count += 1
-            rep = str(pat).replace("$USERNAME",str(username)).replace("$TIMESTAMP",str(timest))
+            rep = str(state).replace(" ",sep)
             md5 = string_to_md5(rep)
             output.write(md5+"\n")
 output.close()
