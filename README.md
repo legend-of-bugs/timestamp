@@ -7,8 +7,9 @@ Creating password reset tokens based on username and time stamp with different p
 - pip install -r requirements.txt
 
 # Usage
-- python3 timestamp.py -u USERNAME -s SECONDS
-  - USERNAME = your username or email
+- python3 timestamp.py -u USERNAME1 -s SECONDS
+- python3 timestamp.py -u USERNAME1,USERNAME2 -s SECONDS
+  - USERNAME = your username or email (You can enter multiple usernames with `,` separator)
   - SECONDS = The amount of seconds you want the tool to create a hash for you based on the timestamp
  
 # Change Pattern
